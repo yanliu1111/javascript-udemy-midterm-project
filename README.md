@@ -19,7 +19,7 @@
     style="display: block; 
            margin-left: auto;
            margin-right: auto;"
-    src="Mapty-flowchart.png" 
+    src="img/Mapty-flowchart.png" 
     alt="roadmap">
 </img> <br>
 
@@ -29,5 +29,5 @@
     style="display: block; 
            margin-left: auto;
            margin-right: auto;"
-    src="class.jpg" 
+    src="img/class.jpg" 
     alt="roadmap">
