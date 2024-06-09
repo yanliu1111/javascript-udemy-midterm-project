@@ -23,7 +23,7 @@
     alt="roadmap">
 </img> <br>
 
-## 🏗 🌁🧱App Architecture
+## 🏗 App Architecture
 
 <img 
     style="display: block; 
