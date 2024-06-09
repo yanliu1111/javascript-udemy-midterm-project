@@ -12,3 +12,22 @@
 - Creating a New Workout
 - Rendering Workouts
 - Working with Local Storage
+
+## 📝 Flowchart
+
+<img 
+    style="display: block; 
+           margin-left: auto;
+           margin-right: auto;"
+    src="Mapty-flowchart.png" 
+    alt="roadmap">
+</img> <br>
+
+## 🏗 🌁🧱App Architecture
+
+<img 
+    style="display: block; 
+           margin-left: auto;
+           margin-right: auto;"
+    src="class.jpg" 
+    alt="roadmap">
