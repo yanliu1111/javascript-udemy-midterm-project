@@ -13,6 +13,7 @@ const inputElevation = document.querySelector('.form__input--elevation');
 class Workout {
   date = new Date();
   id = (Date.now() + '').slice(-10); // + '' convert number to string
+  clicks = 0;
 
   constructor(coords, distance, duration) {
     this.coords = coords; // [lat, lng]
@@ -25,6 +26,9 @@ class Workout {
     this.description = `${this.type[0].toUpperCase()}${this.type.slice(1)} on ${
       months[this.date.getMonth()]
     } ${this.date.getDate()}`;
+  }
+  click() {
+    this.clicks++;
   }
 }
 class Running extends Workout {
@@ -65,6 +69,7 @@ class Cycling extends Workout {
 //Application Architecture
 class App {
   #map;
+  #mapZoomLevel = 13;
   #mapEvent;
   #workouts = [];
   constructor() {
@@ -72,6 +77,7 @@ class App {
     // we are gone catch event listener to DOM element, so we need to bind this to the method
     form.addEventListener('submit', this._newWorkout.bind(this)); //this would point form element, no longer App element
     inputType.addEventListener('change', this._toggleElevationField); //no need to bind this, because it is not a method call, it is a regular function call
+    containerWorkouts.addEventListener('click', this._moveToPopup.bind(this));
   }
   _getPosition() {
     if (navigator.geolocation) {
@@ -89,7 +95,7 @@ class App {
     console.log(`https://www.google.com/maps/@${latitude},${longitude}`);
     const coords = [latitude, longitude];
     console.log(this);
-    this.#map = L.map('map').setView(coords, 13);
+    this.#map = L.map('map').setView(coords, this.#mapZoomLevel);
     //L is namespace for leaflet library
     L.tileLayer('https://tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
       attribution:
@@ -163,7 +169,7 @@ class App {
     }
     // Add new object to workout array
     this.#workouts.push(workout);
-    console.log(workout);
+    // console.log(workout);
     // Render workout on map as marker
     this._renderWorkoutMarker(workout);
     // Render workout on list
@@ -234,6 +240,24 @@ class App {
       </li>
       `;
     form.insertAdjacentHTML('afterend', html); //insert html after the form, form is sibling element of the above html
+  }
+  _moveToPopup(e) {
+    const workoutEl = e.target.closest('.workout');
+    //console.log(workoutEl);
+    if (!workoutEl) return;
+    const workout = this.#workouts.find(
+      work => work.id === workoutEl.dataset.id
+    );
+    console.log(workout);
+    // from leaflet documentation
+    this.#map.setView(workout.coords, this.#mapZoomLevel, {
+      animate: true,
+      pan: {
+        duration: 1,
+      },
+    });
+    //using the public interface
+    workout.click();
   }
 }
 
